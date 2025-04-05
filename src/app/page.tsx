@@ -9,6 +9,7 @@ import CrosswordGrid from "./components/CrosswordGrid";
 import VirtualKeyboard from "./components/VirtualKeyboard";
 import { IoCloseSharp } from "react-icons/io5";
 import clsx from "clsx";
+import { HiddenInput } from "./components/HiddenInput";
 
 export default function HomePage() {
   const [started, setStarted] = useState(false);
@@ -116,25 +117,27 @@ export default function HomePage() {
             </a>
           </div>
         ) : !started ? (
-          <div className="flex flex-col items-center justify-center h-full gap-4">
-            <img
-              src="/start_text.png"
-              alt="Crucigrama"
-              className="size-96 object-contain -mt-52 z-50"
-            />
-            <img
-              src="/start_gif.gif"
-              alt="Loading animation"
-              className="size-64 -mt-44 object-contain"
-            />
+          <>
+            <div className="flex flex-col items-center justify-center h-full gap-4">
+              <img
+                src="/start_text.png"
+                alt="Crucigrama"
+                className="size-96 object-contain -mt-52 z-50"
+              />
+              <img
+                src="/start_gif.gif"
+                alt="Loading animation"
+                className="size-64 -mt-44 object-contain"
+              />
 
-            <button
-              onClick={() => setStarted(true)}
-              className="px-8 py-1 bg-white font-semibold text-base text-[#5981B3] mt-6 cursor-pointer  rounded-2xl   transition"
-            >
-              Play
-            </button>
-          </div>
+              <button
+                onClick={() => setStarted(true)}
+                className="px-8 py-1 bg-white font-semibold text-base text-[#5981B3] mt-6 cursor-pointer  rounded-2xl   transition"
+              >
+                Play
+              </button>
+            </div>
+          </>
         ) : (
           <>
             <div className=" absolute top-3  right-3">
@@ -156,6 +159,7 @@ export default function HomePage() {
                 Get the App
               </a>
             </div>
+            <HiddenInput />
             <div className="relative w-full flex flex-col items-center gap-4">
               <div className="z-10">
                 <CrosswordGrid />
