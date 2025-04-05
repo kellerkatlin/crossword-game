@@ -1,33 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MINI Crossword – Juego interactivo de crucigrama 🧩
 
-## Getting Started
+Versión desarrollada desde cero de un **juego de crucigrama tipo MINI Crossword**, con una experiencia visual y funcional inspirada en productos reales de puzzles interactivos.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Tecnologías utilizadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Next.js 13+](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Zustand](https://github.com/pmndrs/zustand) – manejo global de estado
+- TailwindCSS – estilos rápidos y responsivos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📱 Funcionalidades implementadas
 
-## Learn More
+- Crucigrama interactivo con grid 5x5.
+- Soporte completo para:
+  - Teclado físico (desktop)
+  - Teclado móvil (input oculto)
+  - Teclado virtual
+- Navegación automática por celdas.
+- Detección de celdas llenas.
+- Modal de victoria al completar todas las celdas.
+- Interfaz inspirada fielmente en la versión original.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Puedes probar la versión completa en vivo aquí:  
+🔗 [https://crossword-game-one.vercel.app/](https://crossword-game-one.vercel.app/)
+
+---
+
+## 🧠 Autor
+
+Desarrollado por **Keller Pinedo**  
+Contacto: [kellerkatlin.k@gmail.com]  
+LinkedIn: [https://www.linkedin.com/in/kellerkatlin/]  
+Portafolio: [https://kellerkatlin-dev.vercel.app/]
+
+---
+
+## 💼 Notas
+
+> Cualquier comentario, sugerencia o ajuste adicional será bienvenido.
+
 
 ## Deploy on Vercel
 
