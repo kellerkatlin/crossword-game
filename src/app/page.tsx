@@ -86,6 +86,9 @@ export default function HomePage() {
       setActiveDirection(firstClue.direction);
     }
   }, [setGrid, started, setClues, setSelectedCell, setActiveDirection]);
+  const isMobile =
+    typeof window !== "undefined" &&
+    /Mobi|Android/i.test(window.navigator.userAgent);
 
   return (
     <main className="min-h-screen bg-gray-100">
@@ -160,7 +163,7 @@ export default function HomePage() {
                 Get the App
               </a>
             </div>
-            <HiddenInput />
+
             <div className="relative w-full flex flex-col items-center gap-4">
               <div className="z-10">
                 <CrosswordGrid />
@@ -176,6 +179,7 @@ export default function HomePage() {
             </div>
           </>
         )}
+        {isMobile && started && !finished && <HiddenInput />}
       </div>
     </main>
   );

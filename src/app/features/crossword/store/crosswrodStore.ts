@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { Cell, Clue, Direction, CellPosition } from "../types";
 
-interface CrosswordState {
+export interface CrosswordState {
   grid: Cell[][]; // el grid que se va a usar para el crucigrama
   clues: Clue[]; // las pistas que se van a usar para el crucigrama
   selectedCell: CellPosition | null; // la celda seleccionada por el usuario

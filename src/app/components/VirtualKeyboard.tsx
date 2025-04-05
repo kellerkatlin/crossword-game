@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useCrosswordStore } from "../features/crossword/store/crosswrodStore";
 import { useActiveClue } from "../features/crossword/hooks/useActiveClue";
+import { handleCharacterInput } from "../features/crossword/utils/handlerCharacterInput";
 
 //  Si estás aquí es porque el usuario presionó una tecla...
 
@@ -30,6 +31,9 @@ export default function VirtualKeyboard() {
   // un efecto para manejar el teclado virtual
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // 👉 Previene que se duplique si el foco está en un input
+      if (document.activeElement?.tagName === "INPUT") return;
+
       if (!selectedCell || grid.length === 0) return;
 
       const { row, col } = selectedCell;
@@ -39,31 +43,20 @@ export default function VirtualKeyboard() {
         return;
       }
 
-      if (/^[a-zA-Z]$/.test(e.key)) {
-        updateCellInput(row, col, e.key);
-
-        // Validar si ya está completa
-        if (clue) validateClue(clue.id);
-
-        // Mover a la siguiente celda en la dirección activa
-        let nextRow = row;
-        let nextCol = col;
-
-        if (activeDirection === "across") {
-          nextCol++;
-        } else {
-          nextRow++;
-        }
-
-        const nextCell = grid[nextRow]?.[nextCol];
-        if (nextCell && !nextCell.isBlack) {
-          setSelectedCell({ row: nextRow, col: nextCol });
-        }
-      }
+      handleCharacterInput({
+        value: e.key,
+        selectedCell,
+        grid,
+        activeDirection,
+        updateCellInput,
+        setSelectedCell,
+        validateClue,
+        clueId: clue?.id,
+      });
     };
 
-    window.addEventListener("keydown", handleKeyDown); // Agregar el evento de teclado
-    return () => window.removeEventListener("keydown", handleKeyDown); // Limpiar el evento al desmontar el componente
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [
     selectedCell,
     grid,
