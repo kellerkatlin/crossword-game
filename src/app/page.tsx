@@ -97,12 +97,12 @@ export default function HomePage() {
         {finished ? (
           <div className="flex flex-col items-center justify-center h-full gap-4">
             <img
-              src="http://juliovela.com//NYT/mini/images/exit_text.png"
+              src="/exit_text.png"
               alt="Crucigrama"
               className="size-96 object-contain -mt-52 z-50"
             />
             <img
-              src="http://juliovela.com//NYT/mini/images/A_HA_BLUE_SHADOW_5.gif"
+              src="/exit_gif.gif"
               alt="Loading animation"
               className="size-64 -mt-44 object-contain"
             />
@@ -118,12 +118,12 @@ export default function HomePage() {
         ) : !started ? (
           <div className="flex flex-col items-center justify-center h-full gap-4">
             <img
-              src="http://juliovela.com//NYT/mini/images/intro_text.png"
+              src="/start_text.png"
               alt="Crucigrama"
               className="size-96 object-contain -mt-52 z-50"
             />
             <img
-              src="http://juliovela.com//NYT/mini/images/JUGGLER_2.gif"
+              src="/start_gif.gif"
               alt="Loading animation"
               className="size-64 -mt-44 object-contain"
             />
