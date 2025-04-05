@@ -1,103 +1,177 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import crosswordData from "../app/data/default-crossword.json";
+import { useCrosswordStore } from "./features/crossword/store/crosswrodStore";
+import { Clue, Direction } from "./features/crossword/types";
+import { CluePanel } from "./components/CluePanel";
+import CrosswordGrid from "./components/CrosswordGrid";
+import VirtualKeyboard from "./components/VirtualKeyboard";
+import { IoCloseSharp } from "react-icons/io5";
+import clsx from "clsx";
+
+export default function HomePage() {
+  const [started, setStarted] = useState(false);
+  const [finished, setFinished] = useState(false);
+  const grid = useCrosswordStore((s) => s.grid);
+  const setGrid = useCrosswordStore((state) => state.setGrid);
+  const setClues = useCrosswordStore((state) => state.setClues);
+  const setSelectedCell = useCrosswordStore((state) => state.setSelectedCell);
+  const setActiveDirection = useCrosswordStore(
+    (state) => state.setActiveDirection
+  );
+
+  // useEffect para verificar si todas las celdas están llenas
+  useEffect(() => {
+    const gridState = useCrosswordStore.getState().grid;
+
+    const allFilled = gridState.every((row) =>
+      row.every((cell) => {
+        if (cell.isBlack) return true; // ignorar celdas negras
+        return !!cell.userInput; // verificar si hay un valor en userInput
+      })
+    );
+
+    if (allFilled && gridState.length > 0) {
+      setFinished(true);
+    }
+  }, [grid]);
+
+  // useEffect para inicializar el crucigrama despues de 10 segundos
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setStarted(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [setStarted]);
+
+  // useEffect para inicializar el crucigrama
+  useEffect(() => {
+    if (!started) return;
+    const { grid, clues } = crosswordData;
+
+    //  Aquí nace el caos organizado del crucigrama
+    //  by Keller Pinedo: constructor de cuadrículas, soñador de palabras
+
+    const parsedGrid = grid.map((row: string[], rowIndex: number) =>
+      row.map((cell, colIndex) => ({
+        position: { row: rowIndex, col: colIndex },
+        solution: cell === "#" ? null : "",
+        userInput: null,
+        isBlack: cell === "#",
+        letter: cell === "#" ? null : cell,
+      }))
+    );
+
+    // Normalizar las pistas
+    const normalizedClues: Clue[] = clues.map((clue) => ({
+      ...clue,
+      direction: clue.direction as Direction,
+    }));
+
+    setGrid(parsedGrid);
+
+    setClues(normalizedClues);
+
+    // Establecer la celda seleccionada inicial y la dirección activa
+    const firstClue = normalizedClues.find((clue) => clue.id === 1);
+
+    if (firstClue) {
+      setSelectedCell({
+        row: firstClue.start.row,
+        col: firstClue.start.col,
+      });
+      setActiveDirection(firstClue.direction);
+    }
+  }, [setGrid, started, setClues, setSelectedCell, setActiveDirection]);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    <main className="min-h-screen bg-gray-100">
+      <div
+        className={clsx(
+          "flex relative flex-col  md:justify-center items-center w-full max-w-sm h-screen mx-auto p-6 rounded shadow-md",
+          started && !finished ? "bg-white" : "bg-[#5981B3]"
+        )}
+      >
+        {finished ? (
+          <div className="flex flex-col items-center justify-center h-full gap-4">
+            <img
+              src="http://juliovela.com//NYT/mini/images/exit_text.png"
+              alt="Crucigrama"
+              className="size-96 object-contain -mt-52 z-50"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <img
+              src="http://juliovela.com//NYT/mini/images/A_HA_BLUE_SHADOW_5.gif"
+              alt="Loading animation"
+              className="size-64 -mt-44 object-contain"
+            />
+            <a
+              href="https://perubn.com/"
+              target="_blank"
+              className="px-8 py-1 bg-white font-semibold text-base text-[#5981B3] mt-6 cursor-pointer  rounded-2xl   transition"
+              rel="noopener noreferrer"
+            >
+              Get the App
+            </a>
+          </div>
+        ) : !started ? (
+          <div className="flex flex-col items-center justify-center h-full gap-4">
+            <img
+              src="http://juliovela.com//NYT/mini/images/intro_text.png"
+              alt="Crucigrama"
+              className="size-96 object-contain -mt-52 z-50"
+            />
+            <img
+              src="http://juliovela.com//NYT/mini/images/JUGGLER_2.gif"
+              alt="Loading animation"
+              className="size-64 -mt-44 object-contain"
+            />
+
+            <button
+              onClick={() => setStarted(true)}
+              className="px-8 py-1 bg-white font-semibold text-base text-[#5981B3] mt-6 cursor-pointer  rounded-2xl   transition"
+            >
+              Play
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className=" absolute top-3  right-3">
+              <a
+                href="https://perubn.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IoCloseSharp className="size-6" />
+              </a>
+            </div>
+
+            <div className=" text-[#5981B3] mb-2 underline decoration-[0.5px] ">
+              <a
+                href="https://perubn.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get the App
+              </a>
+            </div>
+            <div className="relative w-full flex flex-col items-center gap-4">
+              <div className="z-10">
+                <CrosswordGrid />
+              </div>
+
+              <div className="absolute top-7/12 mt-2 left-0 w-full">
+                <CluePanel />
+              </div>
+
+              <div className="pt-28 w-full">
+                <VirtualKeyboard />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </main>
   );
 }
