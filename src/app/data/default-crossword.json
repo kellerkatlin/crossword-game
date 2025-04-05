@@ -1,0 +1,91 @@
+{
+  "grid": [
+    ["#", "#", "1", "2", "3"],
+    ["#", "4", "", "", ""],
+    ["5", "", "", "", ""],
+    ["6", "", "", "", "#"],
+    ["7", "", "", "#", "#"]
+  ],
+  "clues": [
+    {
+      "id": 1,
+      "direction": "across",
+      "number": 1,
+      "text": "Vehicle with four wheels",
+      "answer": "CAR",
+      "start": { "row": 0, "col": 2 }
+    },
+    {
+      "id": 2,
+      "direction": "down",
+      "number": 1,
+      "text": "To express refusal (variant of 'can't')",
+      "answer": "CAINT",
+      "start": { "row": 0, "col": 2 }
+    },
+    {
+      "id": 3,
+      "direction": "down",
+      "number": 2,
+      "text": "An uncommon name (or river in Romania)",
+      "answer": "ARNA",
+      "start": { "row": 0, "col": 3 }
+    },
+    {
+      "id": 4,
+      "direction": "down",
+      "number": 3,
+      "text": "Abbreviation for 'Received Date Time'",
+      "answer": "RDT",
+      "start": { "row": 0, "col": 4 }
+    },
+    {
+      "id": 5,
+      "direction": "across",
+      "number": 4,
+      "text": "Type of fat used in cooking",
+      "answer": "LARD",
+      "start": { "row": 1, "col": 1 }
+    },
+    {
+      "id": 6,
+      "direction": "down",
+      "number": 4,
+      "text": "Opposite of early",
+      "answer": "LATE",
+      "start": { "row": 1, "col": 1 }
+    },
+    {
+      "id": 7,
+      "direction": "across",
+      "number": 5,
+      "text": "Used to color a wall or canvas",
+      "answer": "PAINT",
+      "start": { "row": 2, "col": 0 }
+    },
+    {
+      "id": 8,
+      "direction": "down",
+      "number": 5,
+      "text": "Common house animal or an animal name",
+      "answer": "PET",
+      "start": { "row": 2, "col": 0 }
+    },
+    {
+      "id": 9,
+      "direction": "across",
+      "number": 6,
+      "text": "Name of a volcano in Italy",
+      "answer": "ETNA",
+      "start": { "row": 3, "col": 0 }
+    },
+    {
+      "id": 10,
+      "direction": "across",
+      "number": 7,
+      "text": "Vietnamese New Year",
+      "answer": "TET",
+      "start": { "row": 4, "col": 0 }
+    }
+  ]
+}
