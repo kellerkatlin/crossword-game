@@ -101,7 +101,7 @@ export default function HomePage() {
             <img
               src="/exit_text.png"
               alt="Crucigrama"
-              className="size-96 object-contain -mt-52 z-50"
+              className="size-96 object-contain md:-mt-52 z-50"
             />
             <img
               src="/exit_gif.gif"
@@ -123,7 +123,7 @@ export default function HomePage() {
               <img
                 src="/start_text.png"
                 alt="Crucigrama"
-                className="size-96 object-contain -mt-52 z-50"
+                className="size-96 object-contain md:-mt-52 z-50"
               />
               <img
                 src="/start_gif.gif"
