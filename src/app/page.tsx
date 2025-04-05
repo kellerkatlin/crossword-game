@@ -91,7 +91,8 @@ export default function HomePage() {
     <main className="min-h-screen bg-gray-100">
       <div
         className={clsx(
-          "flex relative flex-col  md:justify-center items-center w-full max-w-sm h-screen mx-auto p-6 rounded shadow-md",
+          "flex relative flex-col p-6  items-center w-full min-h-screen h-full",
+          "md:max-w-sm md:mx-auto md:justify-center  md:rounded md:shadow-md",
           started && !finished ? "bg-white" : "bg-[#5981B3]"
         )}
       >
